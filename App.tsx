@@ -1,21 +1,16 @@
-// Etapa 1: só a base do projeto. A navegação e as telas entram na Etapa 2.
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
 
-import { cores } from './src/theme';
+import { IdentificacaoProvider } from './src/context/IdentificacaoContext';
+import AppNavigator from './src/navigation/AppNavigator';
 
 export default function App() {
   return (
-    <View style={styles.container}>
-      <Text style={styles.titulo}>Fire Intelligence</Text>
-      <Text style={styles.subtitulo}>App do brigadista - em construção</Text>
-      <StatusBar style="dark" />
-    </View>
+    <SafeAreaProvider>
+      <IdentificacaoProvider>
+        <AppNavigator />
+        <StatusBar style="light" />
+      </IdentificacaoProvider>
+    </SafeAreaProvider>
   );
 }
-
-const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: cores.fundo, alignItems: 'center', justifyContent: 'center' },
-  titulo: { fontSize: 24, fontWeight: '700', color: cores.primaria },
-  subtitulo: { marginTop: 8, color: cores.textoSuave },
-});
