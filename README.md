@@ -9,23 +9,37 @@ App mobile da CitizenTech **Fire Intelligence** (FIAP Global Solution 2026.2), f
 | Campo | Conteúdo |
 |---|---|
 | Nome da CitizenTech | Fire Intelligence |
-| Cidade e bairro | Alto Paraíso de Goiás (GO), Chapada dos Veadeiros e entorno **[CONFIRMAR]** |
-| Cidadão beneficiado | **[PREENCHER: brigadista, gestor ou pesquisador entrevistado pela equipe]** |
-| Problema, em uma frase | Quem planeja o manejo do fogo precisa consultar várias bases separadas para entender uma única área. |
+| Cidade e bairro | Alto Paraíso de Goiás (GO): Vila de São Jorge e entorno do Parque Nacional da Chapada dos Veadeiros |
+| Cidadão beneficiado | Brigadistas comunitários e voluntários da região, representados pela persona **Carla** (descrita abaixo) |
+| Problema, em uma frase | Quem planeja o manejo do fogo precisa consultar várias bases separadas para entender uma única área, e o que é visto em campo se perde em grupos de mensagem sem localização. |
 | Como funciona | O usuário escolhe uma área de estudo e recebe um diagnóstico com indicadores, fontes e limitações. Em campo, registra observações com a localização do celular. |
 | O que este app faz | É a porta de entrada do brigadista: lista as áreas, mostra o diagnóstico de cada uma e registra observações de campo com GPS. |
-| Indicador de impacto | **[PREENCHER: ex. tempo para reunir as informações de uma área, antes e depois]** |
+| Indicador de impacto | **Tempo para reunir as informações de uma área antes de planejar uma ação**, em minutos. Medido com a persona e com usuários de teste, cronometrando o processo manual (BDQueimadas do INPE, MapBiomas e limites de UCs) e a consulta no app. Meta: menos de 5 minutos no app. Indicador secundário: % das observações de campo registradas com coordenadas. |
 | ODS conectados | ODS 13 (ação contra a mudança do clima): apoia o planejamento do manejo integrado do fogo. ODS 11 (cidades e comunidades sustentáveis): organiza informação ambiental do território para quem atua nele. |
-| Repositório | **[PREENCHER: link do GitHub]** |
+| Repositório | https://github.com/M-siroma/fire-intelligence-mobile |
+
+### Persona e situações de uso
+
+> **Persona fictícia**, construída pela equipe a partir do problema descrito no Projeto-Piloto. Não representa uma pessoa real.
+
+**Carla, 34 anos, brigadista voluntária em São Jorge.** Trabalha como condutora de turismo e, na estação seca, atua numa brigada comunitária. Usa o celular em campo, muitas vezes com sinal fraco.
+
+**Situação 1: preparar a ronda da semana.** Antes de sair, Carla precisa saber como está a área que vai percorrer. Hoje ela abre o site do INPE, filtra os focos, tenta lembrar onde fica o limite do parque e pergunta no grupo da brigada. No app, ela abre o "Entorno da Vila de São Jorge" e vê, numa tela, os focos de calor no período, a sobreposição com a unidade de conservação e o que **não** tem dados, com o motivo.
+
+**Situação 2: registrar o que viu.** Durante a ronda, Carla encontra um trecho de capim seco acumulado perto de uma trilha. Antes, mandaria uma foto no grupo e a informação se perderia. No app, ela registra uma observação "Vegetação seca", descreve o local e toca em "Usar minha localização". A observação fica salva com coordenadas, data e o nome dela.
+
+**Situação 3: sem permissão de localização.** O celular de um colega está com a localização bloqueada. O app avisa, oferece abrir as configurações e deixa salvar a observação mesmo sem coordenadas, para o registro não se perder.
+
+**Situação 4: entender o limite da ferramenta.** Um morador pergunta se pode queimar o pasto porque o app mostra "0 focos" em Cavalcante. Carla mostra o aviso do diagnóstico: um foco é uma detecção por satélite, e o app não autoriza queimadas nem indica áreas seguras para queima.
 
 ## Integrantes
 
 | Nome | RM |
 |---|---|
-| **[Arthur Gomes]** | **[560771]** |
-| **[Luiz Silva]** | **[560110]** |
-| **[Matheus Siroma]** | **[560248]** |
-| **[Pedro Estevam]** | **[560642]** |
+| Arthur Gomes | 560771 |
+| Luiz Silva | 560110 |
+| Matheus Siroma | 560248 |
+| Pedro Estevam | 560642 |
 
 Os mesmos nomes estão no array `authors` do `package.json`.
 
