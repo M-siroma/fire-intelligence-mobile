@@ -22,10 +22,10 @@ App mobile da CitizenTech **Fire Intelligence** (FIAP Global Solution 2026.2), f
 
 | Nome | RM |
 |---|---|
-| **[PREENCHER]** | **[RM]** |
-| **[PREENCHER]** | **[RM]** |
-| **[PREENCHER]** | **[RM]** |
-| **[PREENCHER]** | **[RM]** |
+| **[Arthur Gomes]** | **[560771]** |
+| **[Luiz Silva]** | **[560110]** |
+| **[Matheus Siroma]** | **[560248]** |
+| **[Pedro Estevam]** | **[560642]** |
 
 Os mesmos nomes estão no array `authors` do `package.json`.
 
