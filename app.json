@@ -22,9 +22,6 @@
         "ACCESS_FINE_LOCATION"
       ]
     },
-    "web": {
-      "favicon": "./assets/favicon.png"
-    },
     "plugins": [
       [
         "expo-location",
@@ -32,6 +29,10 @@
           "locationWhenInUsePermission": "O Fire Intelligence usa sua localização apenas para registrar onde a observação de campo foi feita."
         }
       ]
+    ],
+    "platforms": [
+      "ios",
+      "android"
     ]
   }
 }
