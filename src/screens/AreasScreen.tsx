@@ -18,7 +18,7 @@ type EstadoLista =
   | { status: 'erro'; mensagem: string }
   | { status: 'pronto'; areas: AreaResumo[] };
 
-export default function AreasScreen(_props: ScreenProps<'Areas'>) {
+export default function AreasScreen({ navigation }: ScreenProps<'Areas'>) {
   const { identificacao, sair } = useIdentificacao();
   const [estado, setEstado] = useState<EstadoLista>({ status: 'carregando' });
   const [atualizando, setAtualizando] = useState(false);
@@ -78,7 +78,12 @@ export default function AreasScreen(_props: ScreenProps<'Areas'>) {
         <FlatList
           data={estado.areas}
           keyExtractor={(area) => area.id}
-          renderItem={({ item }) => <AreaItem area={item} />}
+          renderItem={({ item }) => (
+            <AreaItem
+              area={item}
+              onPress={(area) => navigation.navigate('AreaDetalhe', { areaId: area.id, nome: area.nome })}
+            />
+          )}
           contentContainerStyle={estado.areas.length === 0 ? styles.listaVazia : styles.lista}
           ItemSeparatorComponent={() => <View style={styles.separador} />}
           refreshControl={

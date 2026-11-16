@@ -5,6 +5,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { ActivityIndicator, StyleSheet, View } from 'react-native';
 
 import { useIdentificacao } from '../context/IdentificacaoContext';
+import AreaDetalheScreen from '../screens/AreaDetalheScreen';
 import AreasScreen from '../screens/AreasScreen';
 import IdentificacaoScreen from '../screens/IdentificacaoScreen';
 import { cores } from '../theme';
@@ -39,7 +40,14 @@ export default function AppNavigator() {
             options={{ title: 'Identificação' }}
           />
         ) : (
-          <Stack.Screen name="Areas" component={AreasScreen} options={{ title: 'Áreas de estudo' }} />
+          <>
+            <Stack.Screen name="Areas" component={AreasScreen} options={{ title: 'Áreas de estudo' }} />
+            <Stack.Screen
+              name="AreaDetalhe"
+              component={AreaDetalheScreen}
+              options={{ title: 'Diagnóstico da área' }}
+            />
+          </>
         )}
       </Stack.Navigator>
     </NavigationContainer>
