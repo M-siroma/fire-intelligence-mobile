@@ -1,15 +1,19 @@
 // Tela 3: detalhe da área com o diagnóstico (indicadores, fontes, períodos, lacunas e limitações).
+import { useFocusEffect } from '@react-navigation/native';
 import { useCallback, useEffect, useState } from 'react';
-import { RefreshControl, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { ActivityIndicator, RefreshControl, ScrollView, StyleSheet, Text, View } from 'react-native';
 
 import AvisoModoDemo from '../components/AvisoModoDemo';
 import AvisoPosicionamento from '../components/AvisoPosicionamento';
+import Botao from '../components/Botao';
 import { Carregando, Erro, Vazio } from '../components/EstadoTela';
 import IndicadorCard from '../components/IndicadorCard';
+import ObservacaoItem from '../components/ObservacaoItem';
 import { buscarDiagnostico } from '../services/areasService';
 import { mensagemDeErro } from '../services/http';
+import { listarObservacoes } from '../services/observacoesService';
 import { cores, espaco } from '../theme';
-import type { Diagnostico } from '../types/models';
+import type { Diagnostico, Observacao } from '../types/models';
 import type { ScreenProps } from '../types/navigation';
 import { formatarData } from '../utils/formatacao';
 
@@ -18,10 +22,31 @@ type EstadoDiagnostico =
   | { status: 'erro'; mensagem: string }
   | { status: 'pronto'; diagnostico: Diagnostico };
 
-export default function AreaDetalheScreen({ route }: ScreenProps<'AreaDetalhe'>) {
+type EstadoObservacoes =
+  | { status: 'carregando' }
+  | { status: 'erro'; mensagem: string }
+  | { status: 'pronto'; observacoes: Observacao[] };
+
+export default function AreaDetalheScreen({ route, navigation }: ScreenProps<'AreaDetalhe'>) {
   const { areaId, nome } = route.params;
   const [estado, setEstado] = useState<EstadoDiagnostico>({ status: 'carregando' });
+  const [observacoes, setObservacoes] = useState<EstadoObservacoes>({ status: 'carregando' });
   const [atualizando, setAtualizando] = useState(false);
+
+  const carregarObservacoes = useCallback(async () => {
+    try {
+      setObservacoes({ status: 'pronto', observacoes: await listarObservacoes(areaId) });
+    } catch (erro: unknown) {
+      setObservacoes({ status: 'erro', mensagem: mensagemDeErro(erro) });
+    }
+  }, [areaId]);
+
+  // Recarrega as observações sempre que a tela volta ao foco (ex.: depois de salvar uma nova).
+  useFocusEffect(
+    useCallback(() => {
+      void carregarObservacoes();
+    }, [carregarObservacoes]),
+  );
 
   const carregar = useCallback(async () => {
     try {
@@ -43,7 +68,7 @@ export default function AreaDetalheScreen({ route }: ScreenProps<'AreaDetalhe'>)
 
   async function atualizar() {
     setAtualizando(true);
-    await carregar();
+    await Promise.all([carregar(), carregarObservacoes()]);
     setAtualizando(false);
   }
 
@@ -85,6 +110,22 @@ export default function AreaDetalheScreen({ route }: ScreenProps<'AreaDetalhe'>)
             ))
           )}
         </View>
+
+        <Text style={styles.secao}>Observações de campo</Text>
+        <Botao
+          titulo="Registrar observação"
+          onPress={() => navigation.navigate('NovaObservacao', { areaId, nomeArea: nome })}
+        />
+        {observacoes.status === 'carregando' && <ActivityIndicator color={cores.primaria} />}
+        {observacoes.status === 'erro' && (
+          <Text style={styles.erro}>Não foi possível carregar as observações: {observacoes.mensagem}</Text>
+        )}
+        {observacoes.status === 'pronto' &&
+          (observacoes.observacoes.length === 0 ? (
+            <Text style={styles.vazio}>Nenhuma observação registrada nesta área ainda.</Text>
+          ) : (
+            observacoes.observacoes.map((obs) => <ObservacaoItem key={obs.id} observacao={obs} />)
+          ))}
       </ScrollView>
     </View>
   );
@@ -105,4 +146,6 @@ const styles = StyleSheet.create({
     gap: espaco.sm,
   },
   item: { fontSize: 14, lineHeight: 20, color: cores.texto },
+  erro: { color: cores.erro, fontSize: 14 },
+  vazio: { color: cores.textoSuave, fontSize: 14, textAlign: 'center', paddingVertical: espaco.md },
 });
