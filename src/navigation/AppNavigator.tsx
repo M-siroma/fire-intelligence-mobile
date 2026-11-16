@@ -8,6 +8,7 @@ import { useIdentificacao } from '../context/IdentificacaoContext';
 import AreaDetalheScreen from '../screens/AreaDetalheScreen';
 import AreasScreen from '../screens/AreasScreen';
 import IdentificacaoScreen from '../screens/IdentificacaoScreen';
+import NovaObservacaoScreen from '../screens/NovaObservacaoScreen';
 import { cores } from '../theme';
 import type { RootStackParamList } from '../types/navigation';
 
@@ -46,6 +47,11 @@ export default function AppNavigator() {
               name="AreaDetalhe"
               component={AreaDetalheScreen}
               options={{ title: 'Diagnóstico da área' }}
+            />
+            <Stack.Screen
+              name="NovaObservacao"
+              component={NovaObservacaoScreen}
+              options={{ title: 'Nova observação' }}
             />
           </>
         )}
