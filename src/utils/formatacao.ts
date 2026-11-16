@@ -8,8 +8,16 @@ export function formatarData(iso: string): string {
   return `${dia}/${mes}/${data.getFullYear()}`;
 }
 
+/**
+ * Número no padrão brasileiro: milhar com ponto, decimal com vírgula.
+ * Feito à mão para não depender do suporte a Intl no aparelho.
+ */
+export function formatarNumero(valor: number, casasDecimais = 0): string {
+  const [inteiro, decimal] = valor.toFixed(casasDecimais).split('.');
+  const comMilhar = inteiro.replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+  return decimal ? `${comMilhar},${decimal}` : comMilhar;
+}
+
 export function formatarHectares(ha: number): string {
-  // Separador de milhar com ponto, sem depender do suporte a Intl no aparelho.
-  const inteiro = Math.round(ha).toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.');
-  return `${inteiro} ha`;
+  return `${formatarNumero(ha)} ha`;
 }
